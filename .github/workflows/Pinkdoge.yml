@@ -5,12 +5,12 @@ on:
   workflow_dispatch
     
 env:
-  ROM_URL: https://cfhcable.dl.sourceforge.net/project/xiaomi-eu-multilang-miui-roms/xiaomi.eu/MIUI-WEEKLY-RELEASES/20.8.6/xiaomi.eu_multi_MIMAX3_20.8.6_v12-10.zip
+  ROM_URL: https://c3iuih2l4ntv0bg97inmdfmbeaaibebksocmph2nf8c4jqg1f9evujt6.qc.dolfincdnx.net:32835/xdispatch78e6108778f0523d/bigota.d.miui.com/22.10.26/miui_PSYCHEPRE_22.10.26_41ed645005_12.0.zip?bsreqid=38b5289a728b18d654765d51c91e4eee&coldbiz=1&bsxdisp=se
   ROM_NAME: MIUI
   BUILD_AB: true
-  BUILD_AONLY: true
+  BUILD_AONLY: false
   ROM_AONLY: MAX3_Aonly_20.8.6-eu.7z
-  ROM_AB: K20P_AB_20.7.16-eu.7z
+  ROM_AB: 12x 22.10.26.7z
 
 jobs:
   build:
@@ -47,15 +47,15 @@ jobs:
               sudo bash setup.sh
        
        - name: Download Stock Rom & Generate Aonly GSI
-         if: env.BUILD_AONLY == 'true'
+         if: env.BUILD_AONLY == 'false'
          run: sudo ./ErfanGSIs/url2GSI.sh -a $ROM_URL $ROM_NAME
        
        - name: 7z Aonly GSI
-         if: env.BUILD_AONLY == 'true'
+         if: env.BUILD_AONLY == 'false'
          run: 7za a -t7z -r $ROM_AONLY ErfanGSIs/output/*
        
        - name: Upload Aonly GSI to WeTransfer
-         if: env.BUILD_AONLY == 'true'
+         if: env.BUILD_AONLY == 'false'
          run: |
               curl -sL https://git.io/file-transfer | sh
               ./transfer wet $ROM_AONLY
